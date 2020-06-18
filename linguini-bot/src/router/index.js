@@ -5,8 +5,12 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: () => import("@/views/FirstPage.vue"),
+    redirect: "/index",
+  },
+  {
+    path: "/index",
+    name: "index",
+    component: () => import("../views/FirstPage.vue"),
   },
   {
     path: "/main",

@@ -1,0 +1,17 @@
+[debug] [2020-06-18T16:04:34.550Z] ----------------------------------------------------------------------
+[debug] [2020-06-18T16:04:34.552Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\David\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2020-06-18T16:04:34.552Z] CLI Version:   8.4.2
+[debug] [2020-06-18T16:04:34.552Z] Platform:      win32
+[debug] [2020-06-18T16:04:34.552Z] Node Version:  v12.13.1
+[debug] [2020-06-18T16:04:34.553Z] Time:          Thu Jun 18 2020 10:04:34 GMT-0600 (Central Standard Time)
+[debug] [2020-06-18T16:04:34.553Z] ----------------------------------------------------------------------
+[debug] [2020-06-18T16:04:34.553Z] 
+[debug] [2020-06-18T16:04:34.565Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-06-18T16:04:34.566Z] > authorizing via signed-in user
+[debug] [2020-06-18T16:04:34.566Z] [iam] checking project fibonacci-chatbot for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-06-18T16:04:34.568Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-06-18T16:04:34.569Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-06-18T16:04:34.825Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 18 Jun 2020 16:04:34 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-28=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-18T16:04:34.838Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/fibonacci-chatbot:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
