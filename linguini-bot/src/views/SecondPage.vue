@@ -5,11 +5,28 @@
       class="img-logo"
       src="../assets/logoFibonacci.png"
     />
-    <v-btn rounded color="#F44138" dark class="boton">Iniciar sesión</v-btn>
-    <v-btn rounded color="#657FEA" dark class="boton">Registrarse</v-btn>
-    <v-btn rounded color="#657FEA" dark class="boton"
-      ><v-icon dark>mdi-google</v-icon></v-btn
+    <v-btn
+      rounded
+      color="#F44138"
+      dark
+      class="boton"
+      to="login"
+      style="width: 50%"
+      >Login</v-btn
     >
+    <v-btn
+      rounded
+      color="#657FEA"
+      dark
+      class="boton"
+      to="register"
+      style="width: 50%"
+    >
+      Register
+    </v-btn>
+    <v-btn rounded color="#657FEA" dark class="boton" style="width: 50%">
+      <v-icon dark> mdi-google </v-icon>
+    </v-btn>
   </div>
 </template>
 <script>

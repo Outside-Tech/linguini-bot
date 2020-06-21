@@ -24,7 +24,6 @@ export default {
   },
   methods: {
     timer() {
-      console.log("Entro");
       setTimeout(() => this.$router.push("/main"), 5000);
     },
   },
