@@ -89,7 +89,7 @@
         hide-details
         class="ma-2"
       ></v-text-field>
-      <v-btn @click="createChat" class="ma-2" color="#5E3BF2" fab small dark>
+      <v-btn @click="adminChat" class="ma-2" color="#5E3BF2" fab small dark>
         <v-icon>mdi-send-outline</v-icon>
       </v-btn>
     </div>
@@ -164,7 +164,6 @@ export default {
           uid: this.uid,
         })
         .then((docRef) => {
-          this.newChat = false;
           this.idChat = docRef.id;
           console.log(this.idChat);
           this.sendMessage();
@@ -181,7 +180,7 @@ export default {
           .add({
             message: this.message,
             uid: this.uid,
-            idchat: this.idChat,
+            idChat: this.idChat,
           })
           .then(() => {
             // this.getChat();
@@ -198,13 +197,13 @@ export default {
         db.collection("chats")
           .doc(this.idChat)
           .collection("messages")
-          .where("idchat", "==", this.idChat)
+          .where("idChat", "==", this.idChat)
           .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
               if (change.type === "added") {
                 let doc = change.doc;
                 this.messages.push(doc.data());
-                console.log("Sirvo", this.message); //Aca donde re
+                console.log("Sirvo", this.messages); //Aca donde re
               }
             });
           });
@@ -228,7 +227,10 @@ export default {
           console.log(test);
           this.message = "";
           console.log(response);
-          this.getChat();
+          if (this.newChat) {
+            this.getChat();
+            this.newChat = false;
+          }
         })
         .catch((error) => {
           console.log(error);
