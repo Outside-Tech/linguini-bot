@@ -4,6 +4,7 @@
       color="#5e3bf2"
       dark
       dense
+      floating
       style="width:100%;  max-height: 8% !important"
     >
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon>
@@ -12,10 +13,10 @@
       >
       <v-spacer></v-spacer> -->
       <v-btn icon>
-        <v-icon>mdi-account</v-icon>
+        <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-content style="width: 100%;">
+    <v-content style="width: 100%;" class="tag-container">
       <div
         style="width: 100%; height:100%"
         class="d-flex flex-column justify-start align-center"
@@ -24,40 +25,67 @@
           class="d-flex justify-center"
           style="margin-top: 1.5rem !important; width: 80%"
         ></div>
-        <div class="d-flex tag-container" style="width: 100%">
+        <div class="d-flex flex-column" style="width: 100%">
           <div
             v-for="tag in tags"
             :key="tag.name"
-            class="d-flex justify-center align-center"
+            class="d-flex flex-column justify-center align-center"
           >
             <div
-              class="d-flex flex-column justify-center align-center"
-              style="padding: 0; margin: 0"
-              @click="changeCategory(tag.items)"
+              class="d-flex justify-right"
+              style="padding: 0; margin: 0; width: 100%"
+            >
+              <v-avatar class="ma-2">
+                <img
+                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                  alt="John"
+                />
+              </v-avatar>
+              <v-card
+                flat
+                class="card-tag ma-2 d-flex flex-column justify-center"
+                color="#b7bff1"
+              >
+                <v-card-text style="color: #fff">{{ tag.name }} </v-card-text>
+              </v-card>
+            </div>
+            <div
+              class="d-flex justify-end"
+              style="padding: 0; margin: 0; width: 100%"
             >
               <v-card
+                flat
                 class="card-tag ma-2 d-flex flex-column justify-center"
-                color="#8795E8"
+                color="#1E4067"
               >
-                <v-icon dark> {{ tag.img }} </v-icon>
+                <v-card-text style="color: #fff">{{ tag.name }} </v-card-text>
               </v-card>
-              <div style="cursor: pointer; font-size: 0.8rem">
-                {{ tag.display_name }}
-              </div>
+
+              <v-avatar class="ma-2">
+                <img src="../assets/chefleo03.png" alt="Chef Leo" />
+              </v-avatar>
             </div>
           </div>
         </div>
+        <div
+          class="d-flex justify-center align-center"
+          style="width: 100%; background-color:#edeef2"
+        >
+          <v-text-field
+            solo
+            label="Type a message..."
+            rounded
+            dense
+            light
+            hide-details
+            class="ma-2"
+          ></v-text-field>
+          <v-btn class="ma-2" color="#5E3BF2" fab small dark>
+            <v-icon>mdi-send-outline</v-icon>
+          </v-btn>
+        </div>
       </div>
     </v-content>
-    <v-text-field
-      solo
-      label="Search Recipe"
-      prepend-inner-icon="mdi-magnify"
-      rounded
-      dense
-      light
-      style="width: 100%"
-    ></v-text-field>
     <!-- <v-bottom-navigation grow color="#5e3bf2" :value="activeBtn">
       <v-btn>
         <span>Home</span>
@@ -156,14 +184,14 @@ export default {
 }
 
 .tag-container {
-  overflow-x: auto !important;
+  overflow-y: auto !important;
 }
 .tag-container::-webkit-scrollbar {
   display: none !important;
 }
 
 .card-tag {
-  width: 60px;
+  width: 60%;
   height: 60px;
   background-color: #1e4067;
 }

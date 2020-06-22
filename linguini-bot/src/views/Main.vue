@@ -10,10 +10,6 @@
       <v-toolbar-title class="flex justify-center align-center">
         Fibonacci</v-toolbar-title
       >
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
     </v-toolbar>
     <v-content style="width: 100%;">
       <div
