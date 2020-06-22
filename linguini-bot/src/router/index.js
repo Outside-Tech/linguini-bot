@@ -38,6 +38,11 @@ const routes = [
     component: () => import("@/views/Main.vue"),
   },
   {
+    path: "/chat-recipes",
+    name: "chat-recipes",
+    component: () => import("@/views/RecipesChat.vue"),
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting

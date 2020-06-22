@@ -6,11 +6,11 @@
       dense
       style="width:100%;  max-height: 8% !important"
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title class="flex justify-center align-center">
         Fibonacci</v-toolbar-title
       >
-      <v-spacer></v-spacer>
+      <v-spacer></v-spacer> -->
       <v-btn icon>
         <v-icon>mdi-account</v-icon>
       </v-btn>
@@ -23,17 +23,7 @@
         <div
           class="d-flex justify-center"
           style="margin-top: 1.5rem !important; width: 80%"
-        >
-          <v-text-field
-            solo
-            label="Search Recipe"
-            prepend-inner-icon="mdi-magnify"
-            rounded
-            dense
-            light
-            style="width: 100%"
-          ></v-text-field>
-        </div>
+        ></div>
         <div class="d-flex tag-container" style="width: 100%">
           <div
             v-for="tag in tags"
@@ -57,31 +47,18 @@
             </div>
           </div>
         </div>
-        <v-row class="d-flex" style="width: 100%; margin-top: 2rem">
-          <v-col
-            v-for="item in selected"
-            :key="item.id"
-            class="d-flex justify-right align-right"
-            cols="6"
-            xs="6"
-            sm="6"
-            md="6"
-            lg="6"
-          >
-            <v-card
-              class="card-item ma-2 d-flex flex-column justify-center"
-              color="white"
-            >
-              <v-img style="max-height: 75px" :src="item.thumbnail_url"></v-img>
-              <v-card-text>
-                {{ item.name }}
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
       </div>
     </v-content>
-    <v-bottom-navigation grow color="#5e3bf2" :value="activeBtn">
+    <v-text-field
+      solo
+      label="Search Recipe"
+      prepend-inner-icon="mdi-magnify"
+      rounded
+      dense
+      light
+      style="width: 100%"
+    ></v-text-field>
+    <!-- <v-bottom-navigation grow color="#5e3bf2" :value="activeBtn">
       <v-btn>
         <span>Home</span>
         <v-icon>mdi-home</v-icon>
@@ -98,7 +75,7 @@
         <span>Account</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
-    </v-bottom-navigation>
+    </v-bottom-navigation> -->
   </div>
 </template>
 <script>
@@ -127,27 +104,7 @@ export default {
               this.tags.push(doc.data()); //Aca donde re
             }
           });
-          // console.log("Tags", this.tags);
-          this.getRecipes();
         });
-    },
-    getRecipes() {
-      db.collection("recipes")
-        // .where("estado", "==", true)
-        .onSnapshot((snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            if (change.type == "added") {
-              let doc = change.doc;
-              this.tags.forEach((x) => {
-                if (x.name == doc.data().tags) {
-                  x.items.push(doc.data());
-                }
-              });
-            }
-          });
-        });
-      this.selected = this.tags[0].items;
-      console.log("Tags", this.tags);
     },
     changeCategory(items) {
       this.selected = items;
