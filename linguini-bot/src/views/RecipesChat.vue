@@ -28,7 +28,7 @@
         <div class="d-flex flex-column" style="width: 100%;">
           <div
             v-for="message in messages"
-            :key="message.message"
+            :key="message.i"
             class="d-flex flex-column justify-center align-center"
           >
             <div
@@ -53,7 +53,7 @@
               </v-card>
             </div>
             <div
-              v-if="message.uid == leoUid"
+              v-else
               class="d-flex justify-end"
               style="padding: 0; margin: 0; width: 100%"
             >
@@ -62,7 +62,9 @@
                 class="card-chat ma-2 d-flex flex-column justify-center"
                 color="#1E4067"
               >
-                <v-card-text style="color: #fff">{{ tag.name }} </v-card-text>
+                <v-card-text style="color: #fff"
+                  >{{ message.message }}
+                </v-card-text>
               </v-card>
 
               <v-avatar class="ma-2">
@@ -182,7 +184,7 @@ export default {
             idchat: this.idChat,
           })
           .then(() => {
-            this.getChat();
+            // this.getChat();
             // this.message = "";
             this.sendMessageW();
           })
@@ -201,11 +203,12 @@ export default {
             snapshot.docChanges().forEach((change) => {
               if (change.type === "added") {
                 let doc = change.doc;
-                this.messages.push(doc.data()); //Aca donde re
+                this.messages.push(doc.data());
+                console.log("Sirvo", this.message); //Aca donde re
               }
             });
           });
-        console.log("Escucho", this.messages);
+        // console.log("Escucho", this.messages);
       }
     },
     async sendMessageW() {
@@ -225,7 +228,7 @@ export default {
           console.log(test);
           this.message = "";
           console.log(response);
-          //   this.getChat();
+          this.getChat();
         })
         .catch((error) => {
           console.log(error);
