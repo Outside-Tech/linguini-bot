@@ -43,7 +43,7 @@
               </v-avatar>
               <v-card
                 flat
-                class="card-tag ma-2 d-flex flex-column justify-center"
+                class="card-chat ma-2 d-flex flex-column justify-center"
                 color="#b7bff1"
               >
                 <v-card-text style="color: #fff">{{ tag.name }} </v-card-text>
@@ -55,7 +55,7 @@
             >
               <v-card
                 flat
-                class="card-tag ma-2 d-flex flex-column justify-center"
+                class="card-chat ma-2 d-flex flex-column justify-center"
                 color="#1E4067"
               >
                 <v-card-text style="color: #fff">{{ tag.name }} </v-card-text>
@@ -190,7 +190,7 @@ export default {
   display: none !important;
 }
 
-.card-tag {
+.card-chat {
   width: 60%;
   height: 60px;
   background-color: #1e4067;

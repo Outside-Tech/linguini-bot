@@ -67,6 +67,7 @@
             <v-card
               class="card-item ma-2 d-flex flex-column justify-center"
               color="white"
+              @click="seeDetail()"
             >
               <v-img style="max-height: 75px" :src="item.thumbnail_url"></v-img>
               <v-card-text>
@@ -87,8 +88,8 @@
         <v-icon>mdi-crown</v-icon>
       </v-btn>
       <v-btn>
-        <span>About</span>
-        <v-icon>mdi-information</v-icon>
+        <span>Shopping</span>
+        <v-icon>mdi-basket</v-icon>
       </v-btn>
       <v-btn>
         <span>Account</span>
@@ -144,6 +145,9 @@ export default {
         });
       this.selected = this.tags[0].items;
       console.log("Tags", this.tags);
+    },
+    seeDetail() {
+      this.$router.push("/recipeDetail");
     },
     changeCategory(items) {
       this.selected = items;
@@ -202,7 +206,7 @@ export default {
 }
 
 .card-tag {
-  width: 60px;
+  width: 70px;
   height: 60px;
   background-color: #1e4067;
 }
