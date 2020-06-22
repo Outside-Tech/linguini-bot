@@ -25,7 +25,7 @@
           class="d-flex justify-center"
           style="margin-top: 1.5rem !important; width: 80%"
         ></div>
-        <div class="d-flex flex-column" style="width: 100%">
+        <div class="d-flex flex-column" style="width: 100%;">
           <div
             v-for="tag in tags"
             :key="tag.name"
@@ -67,25 +67,25 @@
             </div>
           </div>
         </div>
-        <div
-          class="d-flex justify-center align-center"
-          style="width: 100%; background-color:#edeef2"
-        >
-          <v-text-field
-            solo
-            label="Type a message..."
-            rounded
-            dense
-            light
-            hide-details
-            class="ma-2"
-          ></v-text-field>
-          <v-btn class="ma-2" color="#5E3BF2" fab small dark>
-            <v-icon>mdi-send-outline</v-icon>
-          </v-btn>
-        </div>
       </div>
     </v-content>
+    <div
+      class="d-flex justify-center align-center"
+      style="width: 100%; background-color:#edeef2"
+    >
+      <v-text-field
+        solo
+        label="Type a message..."
+        rounded
+        dense
+        light
+        hide-details
+        class="ma-2"
+      ></v-text-field>
+      <v-btn class="ma-2" color="#5E3BF2" fab small dark>
+        <v-icon>mdi-send-outline</v-icon>
+      </v-btn>
+    </div>
     <!-- <v-bottom-navigation grow color="#5e3bf2" :value="activeBtn">
       <v-btn>
         <span>Home</span>

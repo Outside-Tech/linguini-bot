@@ -82,13 +82,9 @@
               <p style="margin:0; color: white;">
                 Enjoy the experience to cook with your favorite chef
               </p>
-              <v-btn
-                to="chat-recipes"
-                dark
-                style="margin-top: .5rem; background: #657FEA;"
-              >
+              <v-btn dark style="margin-top: .5rem; background: #657FEA;">
                 <v-icon>mdi-food</v-icon>
-                Cook with Leo
+                Cook alone
               </v-btn>
             </v-col>
           </v-row>
@@ -96,11 +92,12 @@
           <v-row class="justify-center">
             <v-col style="padding-top:0;" cols="10">
               <v-btn
+                to="chat-recipes"
                 dark
-                style="margin-top: .5rem; background: #AAB0C2; width:100%"
+                style="margin-top: .5rem; background: #F44138; width:100%"
               >
                 <v-icon>mdi-food</v-icon>
-                <span>Cook alone</span>
+                <span>Cook with Leo</span>
               </v-btn>
             </v-col>
           </v-row>
