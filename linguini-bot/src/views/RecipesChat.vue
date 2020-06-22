@@ -27,11 +27,12 @@
         ></div>
         <div class="d-flex flex-column" style="width: 100%;">
           <div
-            v-for="tag in tags"
-            :key="tag.name"
+            v-for="message in messages"
+            :key="message.message"
             class="d-flex flex-column justify-center align-center"
           >
             <div
+              v-if="message.uid != leoUid"
               class="d-flex justify-right"
               style="padding: 0; margin: 0; width: 100%"
             >
@@ -46,10 +47,13 @@
                 class="card-chat ma-2 d-flex flex-column justify-center"
                 color="#b7bff1"
               >
-                <v-card-text style="color: #fff">{{ tag.name }} </v-card-text>
+                <v-card-text style="color: #fff"
+                  >{{ message.message }}
+                </v-card-text>
               </v-card>
             </div>
             <div
+              v-if="message.uid == leoUid"
               class="d-flex justify-end"
               style="padding: 0; margin: 0; width: 100%"
             >
@@ -74,6 +78,7 @@
       style="width: 100%; background-color:#edeef2"
     >
       <v-text-field
+        v-model="message"
         solo
         label="Type a message..."
         rounded
@@ -82,7 +87,7 @@
         hide-details
         class="ma-2"
       ></v-text-field>
-      <v-btn class="ma-2" color="#5E3BF2" fab small dark>
+      <v-btn @click="createChat" class="ma-2" color="#5E3BF2" fab small dark>
         <v-icon>mdi-send-outline</v-icon>
       </v-btn>
     </div>
@@ -107,12 +112,13 @@
   </div>
 </template>
 <script>
-import { db } from "@/main";
+import { db, auth } from "@/main";
 export default {
   name: "Main",
 
   created() {
     // this.getRecepies();
+    this.uid = auth.currentUser.uid;
     this.getTagsFire();
   },
   data: () => ({
@@ -120,6 +126,12 @@ export default {
     tags: [],
     items: [],
     selected: [],
+    uid: null,
+    idChat: false,
+    messages: [],
+    message: "",
+    leoUid: "X4TkYxTgloQlFjgPKO6ciKSUeL63",
+    newChat: true,
   }),
   methods: {
     getTagsFire() {
@@ -134,35 +146,91 @@ export default {
           });
         });
     },
-    changeCategory(items) {
-      this.selected = items;
+    adminChat() {
+      if (this.newChat) {
+        this.createChat();
+      } else {
+        this.sendMessage();
+      }
     },
-    async getTags() {
+    createChat() {
+      let aux = [];
+      aux.push({ message: this.message, uid: this.uid });
+      db.collection("chats")
+        .add({
+          recipe: "test",
+          uid: this.uid,
+        })
+        .then((docRef) => {
+          this.newChat = false;
+          this.idChat = docRef.id;
+          console.log(this.idChat);
+          this.sendMessage();
+        })
+        .catch((e) => {
+          console.log("Error 2", e);
+        });
+    },
+    sendMessage() {
+      if (this.idChat) {
+        db.collection("chats")
+          .doc(this.idChat)
+          .collection("messages")
+          .add({
+            message: this.message,
+            uid: this.uid,
+            idchat: this.idChat,
+          })
+          .then(() => {
+            this.getChat();
+            // this.message = "";
+            this.sendMessageW();
+          })
+          .catch((e) => {
+            console.log("Error 2", e);
+          });
+      }
+    },
+    getChat() {
+      if (this.idChat) {
+        db.collection("chats")
+          .doc(this.idChat)
+          .collection("messages")
+          .where("idchat", "==", this.idChat)
+          .onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+              if (change.type === "added") {
+                let doc = change.doc;
+                this.messages.push(doc.data()); //Aca donde re
+              }
+            });
+          });
+        console.log("Escucho", this.messages);
+      }
+    },
+    async sendMessageW() {
       let config = {
         headers: {
           Accept: "aplication/json",
-          "Access-Control-Allow-Origin": "*",
         },
       };
 
-      const tags = await this.$http.get(
-        "https://fibonacci-chatbot.web.app/api/v1/tags",
-        config
-      );
-      console.log("Tags", tags);
-    },
-    async getRecepies() {
-      let config = {
-        headers: {
-          Accept: "aplication/json",
-        },
-      };
-
-      const recepies = await this.$http.get(
-        "https://fibonacci-chatbot.web.app/api/v1/recipes",
-        config
-      );
-      console.log("Recepies", recepies);
+      const test = await this.$http
+        .post(
+          "https://fibonacci-chatbot.web.app/api/v1/chatbot/test",
+          { idChat: this.idChat, message: this.message },
+          config
+        )
+        .then((response) => {
+          console.log(test);
+          this.message = "";
+          console.log(response);
+          //   this.getChat();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.message = "";
+        });
     },
   },
 };
