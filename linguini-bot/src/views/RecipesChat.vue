@@ -211,6 +211,8 @@ export default {
       }
     },
     async sendMessageW() {
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
       let config = {
         headers: {
           Accept: "aplication/json",
@@ -219,7 +221,7 @@ export default {
 
       const test = await this.$http
         .post(
-          "https://fibonacci-chatbot.web.app/api/v1/chatbot/test",
+          proxyurl + "https://fibonacci-chatbot.web.app/api/v1/chatbot/test",
           { idChat: this.idChat, message: this.message },
           config
         )
