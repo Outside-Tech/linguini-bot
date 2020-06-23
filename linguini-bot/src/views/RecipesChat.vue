@@ -44,12 +44,10 @@
               </v-avatar>
               <v-card
                 flat
-                class="card-chat ma-2 d-flex flex-column justify-center"
+                class="card-chat ma-2 d-flex flex-column justify-center align-center"
                 color="#b7bff1"
               >
-                <v-card-text style="color: #fff"
-                  >{{ message.message }}
-                </v-card-text>
+                <v-img style="max-height: 60px" :src="message.img_url"></v-img>
               </v-card>
             </div>
             <div
@@ -58,6 +56,20 @@
               style="padding: 0; margin: 0; width: 100%"
             >
               <v-card
+                flat
+                class="card-chat ma-2 d-flex flex-column justify-center"
+                color="#1E4067"
+              >
+                <v-card-text style="color: #fff"
+                  >{{ message.message }}
+                </v-card-text>
+              </v-card>
+
+              <v-avatar class="ma-2">
+                <img src="../assets/chefleo03.png" alt="Chef Leo" />
+              </v-avatar>
+              <v-card
+                v-if="message.type == 'withImage'"
                 flat
                 class="card-chat ma-2 d-flex flex-column justify-center"
                 color="#1E4067"
