@@ -92,7 +92,7 @@
           <v-row class="justify-center">
             <v-col style="padding-top:0;" cols="10">
               <v-btn
-                to="chat-recipes"
+                :to="{ name: 'chat-recipes' }"
                 dark
                 style="margin-top: .5rem; background: #F44138; width:100%"
               >
