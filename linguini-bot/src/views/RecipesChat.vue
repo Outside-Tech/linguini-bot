@@ -16,7 +16,7 @@
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-content style="width: 100%;" class="tag-container">
+    <v-content style="width: 100%;">
       <div
         style="width: 100%; height:100%"
         class="d-flex flex-column justify-start align-center"
@@ -47,7 +47,9 @@
                 class="card-chat ma-2 d-flex flex-column justify-center align-center"
                 color="#b7bff1"
               >
-                <v-img style="max-height: 60px" :src="message.img_url"></v-img>
+                <v-card-text style="color: #fff"
+                  >{{ message.message }}
+                </v-card-text>
               </v-card>
             </div>
             <div
@@ -68,20 +70,70 @@
               <v-avatar class="ma-2">
                 <img src="../assets/chefleo03.png" alt="Chef Leo" />
               </v-avatar>
+            </div>
+            <div
+              v-if="message.type == 'withImage'"
+              class="d-flex justify-end"
+              style="padding: 0; margin: 0; width: 100%"
+            >
               <v-card
-                v-if="message.type == 'withImage'"
                 flat
-                class="card-chat ma-2 d-flex flex-column justify-center"
+                class="card-chat-img ma-2 d-flex justify-center align-center"
                 color="#1E4067"
               >
-                <v-card-text style="color: #fff"
-                  >{{ message.message }}
-                </v-card-text>
+                <v-img style="max-width: 40%" :src="message.img_url"></v-img>
               </v-card>
 
               <v-avatar class="ma-2">
                 <img src="../assets/chefleo03.png" alt="Chef Leo" />
               </v-avatar>
+            </div>
+            <div
+              v-if="message.type == 'withVideo'"
+              class="d-flex justify-end"
+              style="padding: 0; margin: 0; width: 100%"
+            >
+              <v-card
+                flat
+                class="card-chat ma-2 d-flex justify-center align-center"
+                color="#1E4067"
+              >
+                <a style="color: #fff" :href="message.video_url"></a>
+              </v-card>
+
+              <v-avatar class="ma-2">
+                <img src="../assets/chefleo03.png" alt="Chef Leo" />
+              </v-avatar>
+            </div>
+            <div
+              v-if="message.type == 'withCard'"
+              class="d-flex justify-end tag-container"
+              style="padding: 0; margin: 0; width: 100%"
+            >
+              <div
+                v-for="card in message.cards"
+                :key="card.name"
+                class="d-flex justify-center align-center"
+              >
+                <div
+                  class="d-flex flex-column justify-center align-center"
+                  style="padding: 0; margin: 0"
+                >
+                  <v-card
+                    class="card-item ma-2 d-flex flex-column justify-center"
+                    color="white"
+                    @click="seeDetail()"
+                  >
+                    <v-img
+                      style="max-height: 75px"
+                      :src="card.thumbnail_url"
+                    ></v-img>
+                    <v-card-text>
+                      {{ card.name }}
+                    </v-card-text>
+                  </v-card>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -233,7 +285,7 @@ export default {
 
       const test = await this.$http
         .post(
-          proxyurl + "https://fibonacci-chatbot.web.app/api/v1/chatbot/test",
+          proxyurl + "https://fibonacci-chatbot.web.app/api/v1/chatbot/general",
           { idChat: this.idChat, message: this.message },
           config
         )
@@ -271,7 +323,7 @@ export default {
 }
 
 .tag-container {
-  overflow-y: auto !important;
+  overflow-x: auto !important;
 }
 .tag-container::-webkit-scrollbar {
   display: none !important;
@@ -280,6 +332,12 @@ export default {
 .card-chat {
   width: 60%;
   height: 60px;
+  background-color: #1e4067;
+}
+
+.card-chat-img {
+  width: 60%;
+  height: 100px;
   background-color: #1e4067;
 }
 

@@ -78,6 +78,19 @@
         </v-row>
       </div>
     </v-content>
+    <v-speed-dial
+      right
+      class="d-flex justify-end"
+      style="padding-right: 1rem; width: 100%; margin-bottom: 0.5rem"
+    >
+      <template v-slot:activator>
+        <v-btn @click="dialog = true" color="#F44138" dark fab>
+          <v-avatar>
+            <img src="../assets/chefleo03.png" alt="Chef Leo" />
+          </v-avatar>
+        </v-btn>
+      </template>
+    </v-speed-dial>
     <v-bottom-navigation grow color="#5e3bf2" :value="activeBtn">
       <v-btn>
         <span>Home</span>
@@ -96,6 +109,31 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-bottom-navigation>
+    <v-dialog v-model="dialog" scrollable fullscreen hide-overlay>
+      <v-card>
+        <v-card-title style="background-color:#5e3bf2">
+          <v-icon color="#fff" @click="dialog = false">mdi-arrow-left</v-icon>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 100%;"> </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-text-field
+            v-model="message"
+            solo
+            label="Type a message..."
+            rounded
+            dense
+            light
+            hide-details
+            class="ma-1"
+          ></v-text-field>
+          <v-btn @click="adminChat" class="ma-1" color="#5E3BF2" fab small dark>
+            <v-icon>mdi-send-outline</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -112,6 +150,8 @@ export default {
     tags: [],
     items: [],
     selected: [],
+    dialog: false,
+    message: "",
   }),
   methods: {
     getTagsFire() {
