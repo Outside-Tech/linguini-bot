@@ -16,10 +16,6 @@
         style="width: 100%; height:100%"
         class="d-flex flex-column justify-start align-center"
       >
-        <div
-          class="d-flex justify-center"
-          style="margin-top: 1.5rem !important; width: 80%"
-        ></div>
         <div class="d-flex flex-column" style="width: 100%;">
           <div
             v-for="message in messages"

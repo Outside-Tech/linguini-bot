@@ -82,7 +82,17 @@
               <p style="margin:0; color: white;">
                 Enjoy the experience to cook with your favorite chef
               </p>
-              <v-btn dark style="margin-top: .5rem; background: #657FEA;">
+              <v-btn
+                :to="{
+                  name: 'preparation',
+                  params: {
+                    id: this.$route.params.id,
+                    img: this.$route.params.img,
+                  },
+                }"
+                dark
+                style="margin-top: .5rem; background: #657FEA;"
+              >
                 <v-icon>mdi-food</v-icon>
                 Cook alone
               </v-btn>

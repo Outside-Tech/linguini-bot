@@ -43,6 +43,16 @@ const routes = [
     component: () => import("@/views/RecipesChat.vue"),
   },
   {
+    path: "/recipeDetail/:id",
+    name: "recipeDetail",
+    component: () => import("../views/RecipeDetail.vue"),
+  },
+  {
+    path: "/preparation/:id",
+    name: "preparation",
+    component: () => import("../views/Preparation.vue"),
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
@@ -50,11 +60,6 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-  {
-    path: "/recipeDetail/:id",
-    name: "recipeDetail",
-    component: () => import("../views/RecipeDetail.vue"),
   },
 ];
 
