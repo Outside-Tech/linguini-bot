@@ -53,6 +53,11 @@ const routes = [
     component: () => import("../views/Preparation.vue"),
   },
   {
+    path: "/bagdes",
+    name: "bagdes",
+    component: () => import("../views/Bagdes.vue"),
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
