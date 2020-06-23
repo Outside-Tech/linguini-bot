@@ -55,6 +55,7 @@
         </div>
         <v-row class="d-flex" style="width: 100%; margin-top: 2rem">
           <v-col
+            style="padding: 0.1rem;"
             v-for="item in selected"
             :key="item.id"
             class="d-flex justify-right align-right"
