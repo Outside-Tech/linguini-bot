@@ -203,7 +203,7 @@ export default {
               if (change.type === "added") {
                 let doc = change.doc;
                 this.messages.push(doc.data());
-                console.log("Sirvo", this.messages); //Aca donde re
+                // console.log("Sirvo", this.messages); //Aca donde re
               }
             });
           });
