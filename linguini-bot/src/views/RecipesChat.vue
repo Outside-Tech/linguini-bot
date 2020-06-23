@@ -7,11 +7,6 @@
       floating
       style="width:100%;  max-height: 8% !important"
     >
-      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-toolbar-title class="flex justify-center align-center">
-        Fibonacci</v-toolbar-title
-      >
-      <v-spacer></v-spacer> -->
       <v-btn icon>
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
@@ -157,24 +152,6 @@
         <v-icon>mdi-send-outline</v-icon>
       </v-btn>
     </div>
-    <!-- <v-bottom-navigation grow color="#5e3bf2" :value="activeBtn">
-      <v-btn>
-        <span>Home</span>
-        <v-icon>mdi-home</v-icon>
-      </v-btn>
-      <v-btn>
-        <span>Top 10</span>
-        <v-icon>mdi-crown</v-icon>
-      </v-btn>
-      <v-btn>
-        <span>About</span>
-        <v-icon>mdi-information</v-icon>
-      </v-btn>
-      <v-btn>
-        <span>Account</span>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
-    </v-bottom-navigation> -->
   </div>
 </template>
 <script>
@@ -183,15 +160,10 @@ export default {
   name: "Main",
 
   created() {
-    // this.getRecepies();
     this.uid = auth.currentUser.uid;
-    this.getTagsFire();
   },
   data: () => ({
     activeBtn: 0,
-    tags: [],
-    items: [],
-    selected: [],
     uid: null,
     idChat: false,
     messages: [],
@@ -200,18 +172,6 @@ export default {
     newChat: true,
   }),
   methods: {
-    getTagsFire() {
-      db.collection("tags")
-        // .where("estado", "==", true)
-        .onSnapshot((snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            if (change.type == "added") {
-              let doc = change.doc;
-              this.tags.push(doc.data()); //Aca donde re
-            }
-          });
-        });
-    },
     adminChat() {
       if (this.newChat) {
         this.createChat();
@@ -247,8 +207,6 @@ export default {
             idChat: this.idChat,
           })
           .then(() => {
-            // this.getChat();
-            // this.message = "";
             this.sendMessageW();
           })
           .catch((e) => {
@@ -267,11 +225,10 @@ export default {
               if (change.type === "added") {
                 let doc = change.doc;
                 this.messages.push(doc.data());
-                console.log("Sirvo", this.messages); //Aca donde re
+                console.log("Sirvo", this.messages);
               }
             });
           });
-        // console.log("Escucho", this.messages);
       }
     },
     async sendMessageW() {

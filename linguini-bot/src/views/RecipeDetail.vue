@@ -9,7 +9,7 @@
             <v-img
               height="100%"
               width="auto"
-              src="https://img.buzzfeed.com/thumbnailer-prod-us-east-1/f7043f6c2c9246a4808265a6087c0d00/Final.jpg"
+              :src="this.$route.params.img"
             ></v-img>
           </div>
         </v-col>
@@ -26,7 +26,7 @@
         <v-col cols="11">
           <!--Aquí va el nombre de la receta-->
           <h2>
-            Brownie Batter Pancakes
+            {{ item.name }}
           </h2>
         </v-col>
       </v-row>
@@ -42,7 +42,7 @@
                   <v-row>
                     <v-col style="margin:0;" cols="12">
                       <h3>Calories</h3>
-                      <p>881</p>
+                      <p>{{ item.calories }}</p>
                     </v-col>
                   </v-row>
                 </v-col>
@@ -57,7 +57,7 @@
                   <v-row>
                     <v-col style="margin:0;" cols="12">
                       <h3>Servings</h3>
-                      <p>4</p>
+                      <p>{{ item.num_servings }}</p>
                     </v-col>
                   </v-row>
                 </v-col>
@@ -111,7 +111,7 @@
       color="#5e3bf2"
       :value="activeBtn"
     >
-      <v-btn>
+      <v-btn :to="{ name: 'menu' }">
         <span>Home</span>
         <v-icon>mdi-home</v-icon>
       </v-btn>
@@ -132,8 +132,36 @@
 </template>
 <!--Script-->
 <script>
+import { db } from "@/main";
 export default {
   name: "RecipeDetail",
+  data: () => ({
+    item: [],
+  }),
+  created() {
+    this.loadItem();
+  },
+  methods: {
+    loadItem() {
+      console.log(this.$route.params.id);
+      if (this.$route.params.id) {
+        db.collection("recipes")
+          .where("id", "==", parseInt(this.$route.params.id))
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              this.item = doc.data();
+            });
+            console.log(this.item);
+          })
+          .catch(function(error) {
+            console.log("Error getting documents: ", error);
+          });
+      } else {
+        this.$router.replace({ name: "menu" });
+      }
+    },
+  },
 };
 </script>
 <!--Style-->

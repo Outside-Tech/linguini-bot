@@ -52,10 +52,10 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
-    path: "/recipeDetail",
+    path: "/recipeDetail/:id",
     name: "recipeDetail",
     component: () => import("../views/RecipeDetail.vue"),
-  }
+  },
 ];
 
 const router = new VueRouter({
