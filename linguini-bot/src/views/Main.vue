@@ -1,5 +1,20 @@
 <template>
   <div class="principal d-flex flex-column justify-center align-center">
+    <fab
+      v-if="!dialog"
+      :actions="[
+        {
+          name: 'alertMe',
+          icon: 'send',
+          tooltip: firstTooltip,
+          color: '#F44138',
+        },
+      ]"
+      position="bottom-right"
+      bg-color="#F44138"
+      main-icon="face"
+      @alertMe="displayModal"
+    ></fab>
     <v-toolbar
       color="#5e3bf2"
       dark
@@ -78,19 +93,6 @@
         </v-row>
       </div>
     </v-content>
-    <v-speed-dial
-      right
-      class="d-flex justify-end"
-      style="padding-right: 1rem; width: 100%; margin-bottom: 0.5rem"
-    >
-      <template v-slot:activator>
-        <v-btn @click="dialog = true" color="#F44138" dark fab>
-          <v-avatar>
-            <img src="../assets/chefleo03.png" alt="Chef Leo" />
-          </v-avatar>
-        </v-btn>
-      </template>
-    </v-speed-dial>
     <v-bottom-navigation grow color="#5e3bf2" :value="activeBtn">
       <v-btn>
         <span>Home</span>
@@ -138,9 +140,13 @@
 </template>
 <script>
 import { db } from "@/main";
+import fab from "vue-fab";
+
 export default {
   name: "Main",
-
+  components: {
+    fab,
+  },
   created() {
     // this.getRecepies();
     this.getTagsFire();
@@ -192,32 +198,8 @@ export default {
     changeCategory(items) {
       this.selected = items;
     },
-    async getTags() {
-      let config = {
-        headers: {
-          Accept: "aplication/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      };
-
-      const tags = await this.$http.get(
-        "https://fibonacci-chatbot.web.app/api/v1/tags",
-        config
-      );
-      console.log("Tags", tags);
-    },
-    async getRecepies() {
-      let config = {
-        headers: {
-          Accept: "aplication/json",
-        },
-      };
-
-      const recepies = await this.$http.get(
-        "https://fibonacci-chatbot.web.app/api/v1/recipes",
-        config
-      );
-      console.log("Recepies", recepies);
+    displayModal() {
+      this.dialog = true;
     },
   },
 };
