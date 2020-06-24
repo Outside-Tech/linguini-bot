@@ -16,8 +16,9 @@
             <v-row>
               <v-col>
                 <p style="text-align:justify; color:white; font-size:13px;">Fibonnaci is an interactive cookbook with a touch of gamification, where you can search a recipe an choose if you want to cook it alone or hand in hand with LEO.</p>
-                <p style="text-align:justify; color:white; font-size:13px;">We chose the concept of <strong>Fibonnaci sequence</strong> to evoque the perfection of the chef when they make the dishes that deserve Michelin Stars.</p>
+                <p style="text-align:justify; color:white; font-size:13px;">We chose the concept of <strong>Fibonnaci sequence</strong> to evoque the perfection of the chef when they make the dishes that deserve Michelin Stars to the restaurant.</p>
                 <p style="text-align:justify; color:white; font-size:13px;"><strong>Main Objetive in Fibonacci: </strong> Do all the recipe that you can, make points with them, increase your range, if you are the best, you could be the sous chef of LEO, in his restaurant FIBONNACI.</p>
+                <p style="text-align:justify; color:white; font-size:13px;">Range respect the Fibonacci sequence, that means that you can have <strong>Range 1, Range 2, Range 3, Range 5, Range 8, Range, 13</strong> and so on. The recipes have the number of points that you can obtein depend of the difficulty of them.</p>
               </v-col>
             </v-row>
             <v-row class="justify-center">
