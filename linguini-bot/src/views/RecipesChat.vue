@@ -166,8 +166,23 @@ export default {
     message: "",
     leoUid: "X4TkYxTgloQlFjgPKO6ciKSUeL63",
     newChat: true,
+    name: "",
   }),
   methods: {
+    getName() {
+      db.collection("usuarios")
+        .where("email", "==", this.mail)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            this.name = doc.data().name;
+          });
+          console.log(this.item);
+        })
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+    },
     adminChat() {
       if (this.newChat) {
         this.createChat();
@@ -182,6 +197,7 @@ export default {
         .add({
           recipe: "test",
           uid: this.uid,
+          name: this.name,
         })
         .then((docRef) => {
           this.idChat = docRef.id;
