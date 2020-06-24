@@ -284,6 +284,7 @@ export default {
     color: white;
     font-weight: bold;
     font-size: 1rem;
+    font-style: italic;
 }
 
 .txt_range_num {
