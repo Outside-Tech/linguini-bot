@@ -63,7 +63,7 @@
         <span>About</span>
         <v-icon>mdi-information</v-icon>
       </v-btn>
-      <v-btn>
+      <v-btn :to="{ name: 'profile' }">
         <span>Account</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>

@@ -177,6 +177,7 @@ export default {
 
   created() {
     this.uid = auth.currentUser.uid;
+    this.mail = auth.currentUser.email;
   },
   data: () => ({
     activeBtn: 0,

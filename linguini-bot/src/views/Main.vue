@@ -106,7 +106,7 @@
         <span>Shopping</span>
         <v-icon>mdi-basket</v-icon>
       </v-btn>
-      <v-btn>
+      <v-btn :to="{ name: 'profile' }">
         <span>Account</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
