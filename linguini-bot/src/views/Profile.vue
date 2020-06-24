@@ -4,8 +4,85 @@
             <v-row style="margin:0; padding:0;">
                 <v-col style="margin:0; padding:0;" class="cont_princi_pro" cols="12">
                     <v-row style="margin:0; padding:0;" class="justify-end">
-                        <v-col class="cont_icon" cols="2">
-                            <v-icon medium dark>mdi-cog</v-icon>
+                        <v-col class="cont_icon" cols="4">
+                            <div class="text-center">
+                                <v-dialog
+                                v-model="dialog"
+                                width="500"
+                                >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                    color="red lighten-2"
+                                    dark
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    >
+                                        <v-icon>
+                                            mdi-cog       
+                                        </v-icon>
+                                    </v-btn>
+                                </template>
+
+                                <v-card>
+                                    <v-card-title
+                                    class="headline grey lighten-2"
+                                    primary-title
+                                    >
+                                        Settings
+                                    </v-card-title>
+                                    <v-card-text>
+                                        <v-row class="justify-center">
+                                            <v-btn style="margin-top:1rem; width:100%" color="red lighten-2"
+                                                dark
+                                                large>
+                                                <v-icon>mdi-delete</v-icon> 
+                                                Delete Profile
+                                            </v-btn>
+                                        </v-row>
+                                    </v-card-text>
+                                    <v-divider></v-divider>
+                                    <v-card-text>
+                                        <v-row class="justify-center">
+                                            <v-btn style="margin-top:1rem; width:100%" color="primary"
+                                                dark
+                                                large>
+                                                <v-icon>mdi-creation</v-icon> 
+                                                About the game
+                                            </v-btn>
+                                        </v-row>
+                                        <v-row class="justify-center">
+                                            <v-btn style="margin-top:1rem; width:100%" color="primary"
+                                                dark
+                                                large>
+                                                <v-icon>mdi-corn</v-icon> 
+                                                Instructions
+                                            </v-btn>
+                                        </v-row>
+                                        <v-row class="justify-center">
+                                            <v-btn style="margin-top:1rem; width:100%" color="deep-purple accent-4"
+                                                dark
+                                                large>
+                                                <v-icon>mdi-cctv</v-icon> 
+                                                Privacy Policy
+                                            </v-btn>
+                                        </v-row>
+                                    </v-card-text>
+
+                                    <v-divider></v-divider>
+
+                                    <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                        color="primary"
+                                        text
+                                        @click="dialog = false"
+                                    >
+                                        Close
+                                    </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                                </v-dialog>
+                            </div>
                         </v-col>
                     </v-row>
                     <v-row style="margin:0; padding:0;" class="justify-center">
@@ -152,7 +229,11 @@
 
 <script>
 export default {
-    
+    data () {
+      return {
+        dialog: false,
+      }
+    },
 }
 </script>
 
@@ -217,7 +298,7 @@ export default {
 }
 
 .cont_txt_info2 {
-    background: #3cc698;
+    background: #c45150;
     border-radius: 5px;
 }
 
@@ -232,7 +313,7 @@ export default {
 }
 
 .cont_recipe {
-    background: #e8c143;
+    background: #9964ff;
     border-radius: 5px;
     margin:0.3rem 0;
 }
