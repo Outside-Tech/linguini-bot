@@ -75,6 +75,11 @@ const routes = [
     path: "/profile",
     name: "profile", 
     component: () => import("../views/Profile.vue")
+  },
+  {
+    path: "/deleteProfile",
+    name: "deleteProfile", 
+    component: () => import("../views/deleteProfile.vue")
   }
 ];
 
