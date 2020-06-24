@@ -41,7 +41,7 @@
                 style="position: relative"
               >
                 <v-img
-                  style="max-width: 90px; max-height: 60px;"
+                  style="max-width: 100px; max-height: 80px;"
                   :src="item.thumbnail_url"
                 ></v-img>
                 <div
@@ -180,8 +180,12 @@ export default {
 }
 
 .card-tag {
-  width: 90px;
-  height: 60px;
+  width: 100px;
+  height: 80px;
+  background-color: #1e4067;
+}
+
+.card-item {
   background-color: #1e4067;
 }
 </style>
