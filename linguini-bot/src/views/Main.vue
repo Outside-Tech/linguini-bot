@@ -117,6 +117,15 @@
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 100%; padding:0; margin: 0">
+          <div
+            v-if="newChat"
+            class="d-flex flex-column align-center justify-center"
+            style="width: 100%; height: 100%"
+          >
+            <v-btn style="width: 95%" large outlined color="indigo"
+              >Start</v-btn
+            >
+          </div>
           <div class="d-flex flex-column" style="width: 95%;">
             <div
               v-for="message in messages"
@@ -231,7 +240,7 @@
           </div>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions>
+        <v-card-actions v-if="!newChat">
           <v-text-field
             v-model="message"
             solo
@@ -268,6 +277,7 @@ export default {
   },
   created() {
     this.uid = auth.currentUser.uid;
+    this.mail = auth.currentUser.email;
     this.getTagsFire();
   },
   data: () => ({
@@ -277,11 +287,13 @@ export default {
     selected: [],
     dialog: false,
     uid: null,
+    mail: null,
     idChat: false,
     messages: [],
     message: "",
     leoUid: "X4TkYxTgloQlFjgPKO6ciKSUeL63",
     newChat: true,
+    name: "",
   }),
   methods: {
     getTagsFire() {
@@ -294,6 +306,19 @@ export default {
         });
         this.getRecipes();
       });
+
+      db.collection("usuarios")
+        .where("email", "==", this.mail)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            this.name = doc.data().name;
+          });
+          console.log(this.item);
+        })
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
     },
     getRecipes() {
       db.collection("recipes").onSnapshot((snapshot) => {
@@ -331,12 +356,12 @@ export default {
       }
     },
     createChat() {
-      let aux = [];
-      aux.push({ message: this.message, uid: this.uid });
+      this.message = "start";
       db.collection("chats")
         .add({
           recipe: "general",
           uid: this.uid,
+          name: this.name,
         })
         .then((docRef) => {
           this.idChat = docRef.id;
