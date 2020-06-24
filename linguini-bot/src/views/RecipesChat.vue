@@ -7,24 +7,15 @@
       floating
       style="width:100%;  max-height: 8% !important"
     >
-      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-toolbar-title class="flex justify-center align-center">
-        Fibonacci</v-toolbar-title
-      >
-      <v-spacer></v-spacer> -->
       <v-btn icon>
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-content style="width: 100%;" class="tag-container">
+    <v-content style="width: 100%;">
       <div
         style="width: 100%; height:100%"
         class="d-flex flex-column justify-start align-center"
       >
-        <div
-          class="d-flex justify-center"
-          style="margin-top: 1.5rem !important; width: 80%"
-        ></div>
         <div class="d-flex flex-column" style="width: 100%;">
           <div
             v-for="message in messages"
@@ -44,7 +35,7 @@
               </v-avatar>
               <v-card
                 flat
-                class="card-chat ma-2 d-flex flex-column justify-center"
+                class="card-chat ma-2 d-flex flex-column justify-center align-center"
                 color="#b7bff1"
               >
                 <v-card-text style="color: #fff"
@@ -71,6 +62,70 @@
                 <img src="../assets/chefleo03.png" alt="Chef Leo" />
               </v-avatar>
             </div>
+            <div
+              v-if="message.type == 'withImage'"
+              class="d-flex justify-end"
+              style="padding: 0; margin: 0; width: 100%"
+            >
+              <v-card
+                flat
+                class="card-chat-img ma-2 d-flex justify-center align-center"
+                color="#1E4067"
+              >
+                <v-img style="max-width: 40%" :src="message.img_url"></v-img>
+              </v-card>
+
+              <v-avatar class="ma-2">
+                <img src="../assets/chefleo03.png" alt="Chef Leo" />
+              </v-avatar>
+            </div>
+            <div
+              v-if="message.type == 'withVideo'"
+              class="d-flex justify-end"
+              style="padding: 0; margin: 0; width: 100%"
+            >
+              <v-card
+                flat
+                class="card-chat ma-2 d-flex justify-center align-center"
+                color="#1E4067"
+              >
+                <a style="color: #fff" :href="message.video_url"></a>
+              </v-card>
+
+              <v-avatar class="ma-2">
+                <img src="../assets/chefleo03.png" alt="Chef Leo" />
+              </v-avatar>
+            </div>
+            <div
+              v-if="message.type == 'withCard'"
+              class="d-flex justify-end tag-container"
+              style="padding: 0; margin: 0; width: 100%"
+            >
+              <div
+                v-for="card in message.cards"
+                :key="card.name"
+                class="d-flex justify-center align-center"
+              >
+                <div
+                  class="d-flex flex-column justify-center align-center"
+                  style="padding: 0; margin: 0"
+                >
+                  <v-card
+                    class="card-item ma-2 d-flex flex-column justify-center"
+                    color="white"
+                    @click="seeDetail()"
+                  >
+                    <v-img
+                      style="max-height: 75px"
+                      :src="card.thumbnail_url"
+                    ></v-img>
+                    <v-card-text>
+                      {{ card.name }}
+                    </v-card-text>
+                  </v-card>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -93,24 +148,6 @@
         <v-icon>mdi-send-outline</v-icon>
       </v-btn>
     </div>
-    <!-- <v-bottom-navigation grow color="#5e3bf2" :value="activeBtn">
-      <v-btn>
-        <span>Home</span>
-        <v-icon>mdi-home</v-icon>
-      </v-btn>
-      <v-btn>
-        <span>Top 10</span>
-        <v-icon>mdi-crown</v-icon>
-      </v-btn>
-      <v-btn>
-        <span>About</span>
-        <v-icon>mdi-information</v-icon>
-      </v-btn>
-      <v-btn>
-        <span>Account</span>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
-    </v-bottom-navigation> -->
   </div>
 </template>
 <script>
@@ -119,15 +156,10 @@ export default {
   name: "Main",
 
   created() {
-    // this.getRecepies();
     this.uid = auth.currentUser.uid;
-    this.getTagsFire();
   },
   data: () => ({
     activeBtn: 0,
-    tags: [],
-    items: [],
-    selected: [],
     uid: null,
     idChat: false,
     messages: [],
@@ -136,18 +168,6 @@ export default {
     newChat: true,
   }),
   methods: {
-    getTagsFire() {
-      db.collection("tags")
-        // .where("estado", "==", true)
-        .onSnapshot((snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            if (change.type == "added") {
-              let doc = change.doc;
-              this.tags.push(doc.data()); //Aca donde re
-            }
-          });
-        });
-    },
     adminChat() {
       if (this.newChat) {
         this.createChat();
@@ -183,8 +203,6 @@ export default {
             idChat: this.idChat,
           })
           .then(() => {
-            // this.getChat();
-            // this.message = "";
             this.sendMessageW();
           })
           .catch((e) => {
@@ -203,11 +221,10 @@ export default {
               if (change.type === "added") {
                 let doc = change.doc;
                 this.messages.push(doc.data());
-                console.log("Sirvo", this.messages); //Aca donde re
+                console.log("Sirvo", this.messages);
               }
             });
           });
-        // console.log("Escucho", this.messages);
       }
     },
     async sendMessageW() {
@@ -221,7 +238,7 @@ export default {
 
       const test = await this.$http
         .post(
-          proxyurl + "https://fibonacci-chatbot.web.app/api/v1/chatbot/test",
+          proxyurl + "https://fibonacci-chatbot.web.app/api/v1/chatbot/general",
           { idChat: this.idChat, message: this.message },
           config
         )
@@ -259,7 +276,7 @@ export default {
 }
 
 .tag-container {
-  overflow-y: auto !important;
+  overflow-x: auto !important;
 }
 .tag-container::-webkit-scrollbar {
   display: none !important;
@@ -268,6 +285,12 @@ export default {
 .card-chat {
   width: 60%;
   height: 60px;
+  background-color: #1e4067;
+}
+
+.card-chat-img {
+  width: 60%;
+  height: 100px;
   background-color: #1e4067;
 }
 

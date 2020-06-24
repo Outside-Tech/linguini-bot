@@ -1,5 +1,19 @@
 <template>
   <div class="principal d-flex flex-column justify-center align-center">
+    <fab
+      v-if="!dialog"
+      :actions="[
+        {
+          name: 'alertMe',
+          icon: 'send',
+          color: '#F44138',
+        },
+      ]"
+      position="bottom-right"
+      bg-color="#F44138"
+      main-icon="face"
+      @alertMe="displayModal"
+    ></fab>
     <v-toolbar
       color="#5e3bf2"
       dark
@@ -68,7 +82,7 @@
             <v-card
               class="card-item ma-2 d-flex flex-column justify-center"
               color="white"
-              @click="seeDetail()"
+              @click="seeDetail(item.id, item.thumbnail_url)"
             >
               <v-img style="max-height: 75px" :src="item.thumbnail_url"></v-img>
               <v-card-text>
@@ -97,15 +111,164 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-bottom-navigation>
+    <v-dialog v-model="dialog" scrollable fullscreen hide-overlay>
+      <v-card>
+        <v-card-title style="background-color:#5e3bf2">
+          <v-icon color="#fff" @click="closeModal">mdi-arrow-left</v-icon>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 100%; padding:0; margin: 0">
+          <div class="d-flex flex-column" style="width: 95%;">
+            <div
+              v-for="message in messages"
+              :key="message.i"
+              class="d-flex flex-column justify-center align-center"
+            >
+              <div
+                v-if="message.uid != leoUid"
+                class="d-flex justify-right"
+                style="padding: 0; margin: 0; width: 100%"
+              >
+                <v-avatar class="ma-2">
+                  <img
+                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    alt="John"
+                  />
+                </v-avatar>
+                <v-card
+                  flat
+                  class="card-chat ma-2 d-flex flex-column justify-center align-center"
+                  color="#b7bff1"
+                >
+                  <v-card-text style="color: #fff"
+                    >{{ message.message }}
+                  </v-card-text>
+                </v-card>
+              </div>
+              <div
+                v-else
+                class="d-flex justify-end"
+                style="padding: 0; margin: 0; width: 100%"
+              >
+                <v-card
+                  flat
+                  class="card-chat ma-2 d-flex flex-column justify-center"
+                  color="#1E4067"
+                >
+                  <v-card-text style="color: #fff"
+                    >{{ message.message }}
+                  </v-card-text>
+                </v-card>
+
+                <v-avatar class="ma-2">
+                  <img src="../assets/chefleo03.png" alt="Chef Leo" />
+                </v-avatar>
+              </div>
+              <div
+                v-if="message.type == 'withImage'"
+                class="d-flex justify-end"
+                style="padding: 0; margin: 0; width: 100%"
+              >
+                <v-card
+                  flat
+                  class="card-chat-img ma-2 d-flex justify-center align-center"
+                  color="#1E4067"
+                >
+                  <v-img style="max-width: 40%" :src="message.img_url"></v-img>
+                </v-card>
+
+                <v-avatar class="ma-2">
+                  <img src="../assets/chefleo03.png" alt="Chef Leo" />
+                </v-avatar>
+              </div>
+              <div
+                v-if="message.type == 'withVideo'"
+                class="d-flex justify-end"
+                style="padding: 0; margin: 0; width: 100%"
+              >
+                <v-card
+                  flat
+                  class="card-chat ma-2 d-flex justify-center align-center"
+                  color="#1E4067"
+                >
+                  <a style="color: #fff" :href="message.video_url"></a>
+                </v-card>
+
+                <v-avatar class="ma-2">
+                  <img src="../assets/chefleo03.png" alt="Chef Leo" />
+                </v-avatar>
+              </div>
+              <div
+                v-if="message.type == 'withCard'"
+                class="d-flex justify-end tag-container"
+                style="padding: 0; margin: 0; width: 100%"
+              >
+                <div
+                  v-for="card in message.cards"
+                  :key="card.id"
+                  class="d-flex justify-center align-center"
+                >
+                  <div
+                    class="d-flex flex-column justify-center align-center"
+                    style="padding: 0; margin: 0"
+                  >
+                    <v-card
+                      class="card-item ma-2 d-flex flex-column justify-center"
+                      color="white"
+                      @click="seeDetail(card.id, card.thumbnail_url)"
+                    >
+                      <v-img
+                        style="max-height: 75px"
+                        :src="card.thumbnail_url"
+                      ></v-img>
+                      <v-card-text>
+                        {{ card.name }}
+                      </v-card-text>
+                    </v-card>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-text-field
+            v-model="message"
+            solo
+            label="Type a message..."
+            rounded
+            dense
+            light
+            hide-details
+            class="ma-1"
+          ></v-text-field>
+          <v-btn
+            @click="adminChat()"
+            class="ma-1"
+            color="#5E3BF2"
+            fab
+            small
+            dark
+          >
+            <v-icon>mdi-send-outline</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
-import { db } from "@/main";
+import { db, auth } from "@/main";
+import fab from "vue-fab";
+
 export default {
   name: "Main",
-
+  components: {
+    fab,
+  },
   created() {
-    // this.getRecepies();
+    this.uid = auth.currentUser.uid;
     this.getTagsFire();
   },
   data: () => ({
@@ -113,72 +276,146 @@ export default {
     tags: [],
     items: [],
     selected: [],
+    dialog: false,
+    uid: null,
+    idChat: false,
+    messages: [],
+    message: "",
+    leoUid: "X4TkYxTgloQlFjgPKO6ciKSUeL63",
+    newChat: true,
   }),
   methods: {
     getTagsFire() {
-      db.collection("tags")
-        // .where("estado", "==", true)
-        .onSnapshot((snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            if (change.type == "added") {
-              let doc = change.doc;
-              this.tags.push(doc.data()); //Aca donde re
-            }
-          });
-          // console.log("Tags", this.tags);
-          this.getRecipes();
+      db.collection("tags").onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type == "added") {
+            let doc = change.doc;
+            this.tags.push(doc.data());
+          }
         });
+        this.getRecipes();
+      });
     },
     getRecipes() {
-      db.collection("recipes")
-        // .where("estado", "==", true)
-        .onSnapshot((snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            if (change.type == "added") {
-              let doc = change.doc;
-              this.tags.forEach((x) => {
-                if (x.name == doc.data().tags) {
-                  x.items.push(doc.data());
-                }
-              });
-            }
-          });
+      db.collection("recipes").onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type == "added") {
+            let doc = change.doc;
+            let aux = "";
+            this.tags.forEach((x) => {
+              if (x.name == doc.data().tags) {
+                aux = doc.data();
+                aux["idF"] = doc.id;
+                x.items.push(aux);
+              }
+            });
+          }
         });
+      });
+      console.log(this.tags);
       this.selected = this.tags[0].items;
-      console.log("Tags", this.tags);
     },
-    seeDetail() {
-      this.$router.push("/recipeDetail");
+    seeDetail(id, img) {
+      this.$router.push({ name: "recipeDetail", params: { id: id, img: img } });
     },
     changeCategory(items) {
       this.selected = items;
     },
-    async getTags() {
-      let config = {
-        headers: {
-          Accept: "aplication/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      };
-
-      const tags = await this.$http.get(
-        "https://fibonacci-chatbot.web.app/api/v1/tags",
-        config
-      );
-      console.log("Tags", tags);
+    displayModal() {
+      this.dialog = true;
     },
-    async getRecepies() {
+    adminChat() {
+      if (this.newChat) {
+        this.createChat();
+      } else {
+        this.sendMessage();
+      }
+    },
+    createChat() {
+      let aux = [];
+      aux.push({ message: this.message, uid: this.uid });
+      db.collection("chats")
+        .add({
+          recipe: "general",
+          uid: this.uid,
+        })
+        .then((docRef) => {
+          this.idChat = docRef.id;
+          console.log(this.idChat);
+          this.sendMessage();
+        })
+        .catch((e) => {
+          console.log("Error 2", e);
+        });
+    },
+    sendMessage() {
+      if (this.idChat) {
+        db.collection("chats")
+          .doc(this.idChat)
+          .collection("messages")
+          .add({
+            message: this.message,
+            uid: this.uid,
+            idChat: this.idChat,
+          })
+          .then(() => {
+            this.sendMessageW();
+          })
+          .catch((e) => {
+            console.log("Error 2", e);
+          });
+      }
+    },
+    getChat() {
+      if (this.idChat) {
+        db.collection("chats")
+          .doc(this.idChat)
+          .collection("messages")
+          .where("idChat", "==", this.idChat)
+          .onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+              if (change.type === "added") {
+                let doc = change.doc;
+                this.messages.push(doc.data());
+                console.log("Sirvo", this.messages);
+              }
+            });
+          });
+      }
+    },
+    async sendMessageW() {
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
       let config = {
         headers: {
           Accept: "aplication/json",
         },
       };
 
-      const recepies = await this.$http.get(
-        "https://fibonacci-chatbot.web.app/api/v1/recipes",
-        config
-      );
-      console.log("Recepies", recepies);
+      const test = await this.$http
+        .post(
+          proxyurl + "https://fibonacci-chatbot.web.app/api/v1/chatbot/general",
+          { idChat: this.idChat, message: this.message },
+          config
+        )
+        .then((response) => {
+          console.log(test);
+          this.message = "";
+          console.log(response);
+          if (this.newChat) {
+            this.getChat();
+            this.newChat = false;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.message = "";
+        });
+    },
+    closeModal() {
+      this.dialog = false;
+      this.messages = [];
+      this.newChat = true;
     },
   },
 };
@@ -215,6 +452,12 @@ export default {
 .card-item {
   width: 150%;
   height: 80%;
+  background-color: #1e4067;
+}
+
+.card-chat-img {
+  width: 60%;
+  height: 100px;
   background-color: #1e4067;
 }
 

@@ -43,6 +43,21 @@ const routes = [
     component: () => import("@/views/RecipesChat.vue"),
   },
   {
+    path: "/recipeDetail/:id",
+    name: "recipeDetail",
+    component: () => import("../views/RecipeDetail.vue"),
+  },
+  {
+    path: "/preparation/:id",
+    name: "preparation",
+    component: () => import("../views/Preparation.vue"),
+  },
+  {
+    path: "/bagdes",
+    name: "bagdes",
+    component: () => import("../views/Bagdes.vue"),
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
