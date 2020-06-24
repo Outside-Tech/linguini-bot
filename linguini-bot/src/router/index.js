@@ -80,6 +80,11 @@ const routes = [
     path: "/deleteProfile",
     name: "deleteProfile", 
     component: () => import("../views/deleteProfile.vue")
+  },
+  {
+    path: "/policyPrivacy",
+    name: "policyprivacy", 
+    component: () => import("../views/privacyPolicy.vue")
   }
 ];
 
