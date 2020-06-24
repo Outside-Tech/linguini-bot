@@ -22,6 +22,7 @@
                     <v-card-text>
                       <v-row class="justify-center">
                         <v-btn
+                          :to="{ name: 'deleteProfile', params: { uid: uid } }"
                           style="margin-top:1rem; width:100%"
                           color="red lighten-2"
                           dark
@@ -58,6 +59,7 @@
                       </v-row>
                       <v-row class="justify-center">
                         <v-btn
+                          :to="{ name: 'policyprivacy' }"
                           style="margin-top:1rem; width:100%"
                           color="deep-purple accent-4"
                           dark
