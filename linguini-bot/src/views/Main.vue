@@ -98,7 +98,7 @@
         <span>Home</span>
         <v-icon>mdi-home</v-icon>
       </v-btn>
-      <v-btn>
+      <v-btn :to="{ name: 'topten' }">
         <span>Top 10</span>
         <v-icon>mdi-crown</v-icon>
       </v-btn>
@@ -106,7 +106,7 @@
         <span>Shopping</span>
         <v-icon>mdi-basket</v-icon>
       </v-btn>
-      <v-btn>
+      <v-btn :to="{ name: 'profile' }">
         <span>Account</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
@@ -123,7 +123,17 @@
             class="d-flex flex-column align-center justify-center"
             style="width: 100%; height: 100%"
           >
-            <v-btn style="width: 95%" large outlined color="indigo"
+            <img
+              alt="Leo Salute"
+              src="../assets/chefleo03.png"
+              style="width: 50%;"
+            />
+            <v-btn
+              style="width: 95%"
+              @click="adminChat"
+              large
+              outlined
+              color="indigo"
               >Start</v-btn
             >
           </div>
@@ -139,10 +149,7 @@
                 style="padding: 0; margin: 0; width: 100%"
               >
                 <v-avatar class="ma-2">
-                  <img
-                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                    alt="John"
-                  />
+                  <img src="../assets/chef1.png" alt="John" />
                 </v-avatar>
                 <v-card
                   flat
@@ -209,31 +216,34 @@
               </div>
               <div
                 v-if="message.type == 'withCard'"
-                class="d-flex justify-end tag-container"
+                class="d-flex justify-center"
                 style="padding: 0; margin: 0; width: 100%"
               >
-                <div
-                  v-for="card in message.cards"
-                  :key="card.id"
-                  class="d-flex justify-center align-center"
-                >
+                <div class="d-flex tag-container" style="width: 100%">
                   <div
-                    class="d-flex flex-column justify-center align-center"
-                    style="padding: 0; margin: 0"
+                    v-for="card in message.cards"
+                    :key="card.id"
+                    class="d-flex justify-center align-center"
                   >
-                    <v-card
-                      class="card-item ma-2 d-flex flex-column justify-center"
-                      color="white"
-                      @click="seeDetail(card.id, card.thumbnail_url)"
+                    <div
+                      class="d-flex flex-column justify-start align-star"
+                      style="padding: 0; margin: 0"
+                      @click="seeDetail(card.id, card.item.thumbnail_url)"
                     >
-                      <v-img
-                        style="max-height: 75px"
-                        :src="card.thumbnail_url"
-                      ></v-img>
-                      <v-card-text>
-                        {{ card.name }}
-                      </v-card-text>
-                    </v-card>
+                      <v-card
+                        class="card-tag2 ma-2 d-flex flex-column"
+                        color="#8795E8"
+                        style="height: 15%"
+                      >
+                        <v-img
+                          style="max-width: 100px; max-height: 80px;"
+                          :src="card.item.thumbnail_url"
+                        ></v-img>
+                      </v-card>
+                      <div style="cursor: pointer; font-size: 0.8rem">
+                        {{ card.item.name }}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -357,7 +367,7 @@ export default {
       }
     },
     createChat() {
-      this.message = "start";
+      this.message = "Start";
       db.collection("chats")
         .add({
           recipe: "general",
@@ -480,6 +490,12 @@ export default {
   background-color: #1e4067;
 }
 
+.card-item2 {
+  width: 70px;
+  height: 60px;
+  background-color: #1e4067;
+}
+
 .card-chat-img {
   width: 60%;
   height: 100px;
@@ -488,5 +504,11 @@ export default {
 
 #img-primera {
   width: 100%;
+}
+
+.card-tag2 {
+  width: 100px;
+  height: 80px;
+  background-color: #1e4067;
 }
 </style>
