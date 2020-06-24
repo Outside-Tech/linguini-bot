@@ -143,13 +143,12 @@
               <h2>Last recipes</h2>
             </v-col>
           </v-row>
-          <v-row v-for="item in items2" :key="item.id">
+          <v-row v-for="item in items" :key="item.id">
             <v-col class="cont_recipe" cols="12">
               <v-row>
                 <v-col class="cont_img_recipe" cols="4">
                   <v-img
-                    height="100%"
-                    width="auto"
+                    style="max-height: 49.59px"
                     :src="item.thumbnail_url"
                   ></v-img>
                 </v-col>
@@ -241,6 +240,7 @@ export default {
     this.uid = auth.currentUser.uid;
     this.mail = auth.currentUser.email;
     this.getName();
+    this.loadItems();
   },
 };
 </script>
