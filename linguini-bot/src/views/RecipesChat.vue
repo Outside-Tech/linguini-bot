@@ -16,6 +16,25 @@
         style="width: 100%; height:100%"
         class="d-flex flex-column justify-start align-center"
       >
+        <div
+          v-if="newChat"
+          class="d-flex flex-column align-center justify-center"
+          style="width: 100%; height: 100%"
+        >
+          <img
+            alt="Leo Salute"
+            src="../assets/chefleo03.png"
+            style="width: 50%;"
+          />
+          <v-btn
+            style="width: 95%"
+            @click="adminChat"
+            large
+            outlined
+            color="indigo"
+            >Start</v-btn
+          >
+        </div>
         <div class="d-flex flex-column" style="width: 100%;">
           <div
             v-for="message in messages"
@@ -131,6 +150,7 @@
       </div>
     </v-content>
     <div
+      v-if="!newChat"
       class="d-flex justify-center align-center"
       style="width: 100%; background-color:#edeef2"
     >
@@ -191,8 +211,7 @@ export default {
       }
     },
     createChat() {
-      let aux = [];
-      aux.push({ message: this.message, uid: this.uid });
+      this.message = "Start";
       db.collection("chats")
         .add({
           recipe: "test",
@@ -254,8 +273,13 @@ export default {
 
       const test = await this.$http
         .post(
-          proxyurl + "https://fibonacci-chatbot.web.app/api/v1/chatbot/general",
-          { idChat: this.idChat, message: this.message },
+          proxyurl +
+            "https://fibonacci-chatbot.web.app/api/v1/chatbot/howtocook",
+          {
+            idChat: this.idChat,
+            message: this.message,
+            idRecipe: this.$route.params.id,
+          },
           config
         )
         .then((response) => {
@@ -300,7 +324,6 @@ export default {
 
 .card-chat {
   width: 60%;
-  height: 60px;
   background-color: #1e4067;
 }
 

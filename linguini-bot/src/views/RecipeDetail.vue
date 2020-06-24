@@ -102,7 +102,12 @@
           <v-row class="justify-center">
             <v-col style="padding-top:0;" cols="10">
               <v-btn
-                :to="{ name: 'chat-recipes' }"
+                :to="{
+                  name: 'chat-recipes',
+                  params: {
+                    id: this.$route.params.id,
+                  },
+                }"
                 dark
                 style="margin-top: .5rem; background: #F44138; width:100%"
               >

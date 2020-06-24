@@ -60,6 +60,7 @@ export default {
               .add({
                 name: this.name,
                 email: this.email.toLowerCase(),
+                points: 0,
               })
               .then(() => {
                 auth.signOut();
